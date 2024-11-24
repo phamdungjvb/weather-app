@@ -13,7 +13,7 @@ const WeatherInfo = () => {
         weekday: "short",
         month: "short",
         year: "numeric",
-        timeZone: "Asia/Ho_Chi_Minh", // Múi giờ (VD: UTC+7 cho Việt Nam)
+        timeZone: "Asia/Ho_Chi_Minh",
       };
 
       const formattedDate = now.toLocaleDateString("en-US", options);

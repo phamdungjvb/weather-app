@@ -2,11 +2,10 @@ import { useState } from "react";
 import LineChart from "./LineChart";
 
 const WeatherChart = ({ city, date }) => {
-  const [chartType, setChartType] = useState("temperature"); // Sử dụng giá trị hợp lệ cho `type`
+  const [chartType, setChartType] = useState("temperature");
 
-  // Hàm xử lý khi thay đổi lựa chọn trong dropdown
   const handleSelectChange = (event) => {
-    setChartType(event.target.value.toLowerCase()); // Chuyển giá trị về dạng chữ thường
+    setChartType(event.target.value.toLowerCase());
   };
 
   return (
@@ -14,8 +13,8 @@ const WeatherChart = ({ city, date }) => {
       <select
         name="temperature"
         id="temperature"
-        value={chartType} // Liên kết với trạng thái chartType
-        onChange={handleSelectChange} // Gọi hàm xử lý khi giá trị thay đổi
+        value={chartType}
+        onChange={handleSelectChange}
         className="mb-6 p-2 border outline-none rounded-lg"
       >
         <option value="temperature">Temperature</option>
@@ -23,7 +22,6 @@ const WeatherChart = ({ city, date }) => {
         <option value="humidity">Humidity</option>
       </select>
 
-      {/* Hiển thị LineChart với loại dữ liệu được chọn */}
       <LineChart city={city} date={date} type={chartType} />
     </>
   );

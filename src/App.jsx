@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeather } from "./store/weatherSlice";
 import SearchCity from "./components/SearchCity";
@@ -9,8 +9,6 @@ import WeatherCard from "./components/WeatherCard";
 const App = () => {
   const dispatch = useDispatch();
   const { loading, error, forecast } = useSelector((state) => state.weather);
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedType, setSelectedType] = useState(null);
 
   const handleSearch = (city) => {
     dispatch(getWeather(city));
@@ -41,10 +39,7 @@ const App = () => {
 
           <div className="sm:mt-0 sm:ml-12">
             <WeatherChart city={city} date={date} type={type} />
-            <WeatherCard
-              setSelectedDay={setSelectedDay}
-              setSelectedType={setSelectedType}
-            />
+            <WeatherCard />
           </div>
         </div>
       </div>
