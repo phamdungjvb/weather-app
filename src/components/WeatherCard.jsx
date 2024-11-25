@@ -1,13 +1,7 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const WeatherCard = () => {
   const { forecast, loading } = useSelector((state) => state.weather);
-  const [selectedDay, setSelectedDay] = useState(null);
-
-  const handleCardClick = (day) => {
-    setSelectedDay(day);
-  };
 
   if (loading) {
     return <p className="text-center">Loading weather data...</p>;
@@ -21,12 +15,11 @@ const WeatherCard = () => {
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
         {forecast.map((day, index) => (
-          <div
+          <button
             key={index}
             className={`text-center ${
               index === 0 ? "bg-blue-500 text-white" : "bg-white"
             } px-6 py-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 cursor-pointer`}
-            onClick={() => handleCardClick(day)}
           >
             {/* Day */}
             <p className="font-bold text-lg">
@@ -47,7 +40,7 @@ const WeatherCard = () => {
             <p className="text-sm mt-3">{day.day.condition.text}</p>
 
             <p className="font-bold text-xl mt-2">{day.day.avghumidity}%</p>
-          </div>
+          </button>
         ))}
       </div>
     </div>

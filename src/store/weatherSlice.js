@@ -30,6 +30,7 @@ const weatherSlice = createSlice({
     builder
       .addCase(getWeather.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getWeather.fulfilled, (state, action) => {
         state.loading = false;

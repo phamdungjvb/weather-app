@@ -66,9 +66,6 @@ const LineChart = ({ city, date, type }) => {
     fetchData();
   }, [city, date, type, isToday]);
 
-  if (!isToday || chartData.length === 0) {
-  }
-
   const labels = chartData.map((item) => item.time);
   const dt = chartData.map((item) => item.value);
 
@@ -92,16 +89,9 @@ const LineChart = ({ city, date, type }) => {
             ? "rgb(227, 191, 12)"
             : "rgb(64, 136, 4)"
         }`,
-        borderWidth: 1,
         pointRadius: 0,
-        backgroundColor: `${
-          type === "temperature"
-            ? "rgba(75, 192, 192, 0.2)"
-            : type === "uv"
-            ? "rgba(227, 191, 12, 0.2)"
-            : "rgba(64, 136, 4, 0.2)"
-        }`,
-        tension: 0.5,
+
+        tension: 0.1,
       },
     ],
   };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWeather } from "./store/weatherSlice";
 import SearchCity from "./components/SearchCity";
@@ -10,17 +10,26 @@ const App = () => {
   const dispatch = useDispatch();
   const { loading, error, forecast } = useSelector((state) => state.weather);
 
+  // Lấy thông tin mặc định khi khởi tạo ứng dụng
+  useEffect(() => {
+    dispatch(getWeather("Hanoi"));
+  }, [dispatch]);
+
+  // Sử dụng useMemo để tối ưu hóa giá trị city, date, type
+  const weatherData = useMemo(() => {
+    if (forecast.length > 0) {
+      return {
+        date: forecast[0].date,
+        city: forecast[0].city,
+        type: forecast[0].type,
+      };
+    }
+    return { date: "", city: "", type: "" };
+  }, [forecast]);
+
   const handleSearch = (city) => {
     dispatch(getWeather(city));
   };
-
-  useEffect(() => {
-    handleSearch("Hanoi");
-  }, []);
-
-  const date = forecast.length ? forecast[0].date : "";
-  const city = forecast.length ? forecast[0].city : "";
-  const type = forecast.length ? forecast[0].type : "";
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -38,7 +47,11 @@ const App = () => {
           </div>
 
           <div className="sm:mt-0 sm:ml-12">
-            <WeatherChart city={city} date={date} type={type} />
+            <WeatherChart
+              city={weatherData.city}
+              date={weatherData.date}
+              type={weatherData.type}
+            />
             <WeatherCard />
           </div>
         </div>
