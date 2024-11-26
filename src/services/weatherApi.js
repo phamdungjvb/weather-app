@@ -11,7 +11,6 @@ export const fetchWeatherData = async (city) => {
   }
 
   try {
-    console.log("Fetching data from API for city:", city);
     const { data } = await axios.get(
       `${BASE_URL}forecast.json?key=${API_KEY}&q=${city}&days=10&aqi=no&alerts=yes`
     );
@@ -20,7 +19,6 @@ export const fetchWeatherData = async (city) => {
 
     return data;
   } catch (error) {
-    console.error("Failed to fetch weather data:", error.message);
-    throw error;
+    console.log(error);
   }
 };
