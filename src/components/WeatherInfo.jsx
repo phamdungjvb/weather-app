@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const WeatherInfo = () => {
-  const { current, loading } = useSelector((state) => state.weather);
+  const { forecast, selectedDayIndex, loading } = useSelector(
+    (state) => state.weather
+  );
   const [realTime, setRealTime] = useState("");
 
   useEffect(() => {
@@ -31,9 +33,11 @@ const WeatherInfo = () => {
     return <p>Loading...</p>;
   }
 
-  if (!current) {
+  if (!forecast || forecast.length === 0) {
     return <p>No weather data available</p>;
   }
+
+  const selectedDay = forecast[selectedDayIndex]; // Lấy dữ liệu ngày được chọn
 
   return (
     <div className="mt-6 flex flex-col gap-6 py-8 items-center sm:text-left">
@@ -41,31 +45,31 @@ const WeatherInfo = () => {
 
       <div className="flex items-center justify-center sm:justify-start mt-4">
         <img
-          src={current.condition.icon}
-          alt={current.condition.text}
+          src={selectedDay.day.condition.icon}
+          alt={selectedDay.day.condition.text}
           className="w-16 h-16"
         />
         <span className="text-5xl font-bold ml-4">
-          {current.temp_f}
+          {selectedDay.day.avgtemp_f}
           <sup className="align-super text-xl">°F</sup>
         </span>
       </div>
 
       <p className="text-2xl text-gray-700 mt-3 font-bold">
-        {current.condition.text}
+        {selectedDay.day.condition.text}
       </p>
 
       <div className="flex justify-center sm:justify-start text-gray-500 mt-6 space-x-10">
         <div className="text-center">
           <p className="text-lg">Humidity</p>
           <p className="font-semibold text-xl text-gray-700">
-            {current.humidity}%
+            {selectedDay.day.avghumidity}%
           </p>
         </div>
         <div className="text-center">
           <p className="text-lg">Wind speed</p>
           <p className="font-semibold text-xl text-gray-700">
-            {current.wind_kph} km/h
+            {selectedDay.day.maxwind_kph} km/h
           </p>
         </div>
       </div>

@@ -15,6 +15,7 @@ const weatherSlice = createSlice({
     isModalOpen: false, // Trạng thái modal
     loading: false,
     error: null,
+    selectedDayIndex: 0,
   },
   reducers: {
     openModal: (state, action) => {
@@ -24,6 +25,9 @@ const weatherSlice = createSlice({
     closeModal: (state) => {
       state.isModalOpen = false;
       state.selectedDay = null; // Reset chi tiết ngày khi đóng modal
+    },
+    setSelectedDayIndex: (state, action) => {
+      state.selectedDayIndex = action.payload; // Cập nhật ngày được chọn
     },
   },
   extraReducers: (builder) => {
@@ -44,6 +48,7 @@ const weatherSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal } = weatherSlice.actions;
+export const { openModal, closeModal, setSelectedDayIndex } =
+  weatherSlice.actions;
 
 export default weatherSlice.reducer;

@@ -1,7 +1,11 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedDayIndex } from "../store/weatherSlice";
 
 const WeatherCard = () => {
-  const { forecast, loading } = useSelector((state) => state.weather);
+  const { forecast, loading, selectedDayIndex } = useSelector(
+    (state) => state.weather
+  );
+  const dispatch = useDispatch();
 
   if (loading) {
     return <p className="text-center">Loading weather data...</p>;
@@ -11,17 +15,21 @@ const WeatherCard = () => {
     return <p className="text-center">No forecast data available.</p>;
   }
 
+  const handleDayClick = (index) => {
+    dispatch(setSelectedDayIndex(index)); // Dispatch hành động khi click
+  };
+
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
         {forecast.map((day, index) => (
           <button
             key={index}
+            onClick={() => handleDayClick(index)} // Gọi hàm xử lý
             className={`text-center ${
-              index === 0 ? "bg-blue-500 text-white" : "bg-white"
+              index === selectedDayIndex ? "bg-blue-500 text-white" : "bg-white"
             } px-6 py-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 cursor-pointer`}
           >
-            {/* Day */}
             <p className="font-bold text-lg">
               {index === 0
                 ? "Today"
